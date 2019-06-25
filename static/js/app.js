@@ -225,37 +225,43 @@ function calc_total_bill(bill_amt, tip_perc, nbr_people) {
     console.log('temp_tip', temp_tip);
         
      
-    var tip = +((Math.round(temp_bill * temp_tip)/100).toFixed(2));
-    console.log('tip', tip);
+    var total_bill = +((Math.round(temp_bill * (100 + temp_tip))/100).toFixed(2));
+    console.log('total_bill', total_bill);
     
-        
+    var ind_bill_pp = (total_bill).toFixed(2);
+    var bill_pp = (temp_bill).toFixed(2);
+    var tip_pp = (total_bill - temp_bill).toFixed(2);    
+    
+    // just in case, don't want div by 0)
     if (temp_people == 0) {
             
         temp_people = 1;
             
     }
         
-    var tip_pp = (tip / temp_people).toFixed(2);
-    console.log('tip_pp', tip_pp, temp_bill, tip);
+    if (temp_people != 1) {
+           
+        ind_bill_pp = (Math.ceil((total_bill / temp_people) * 100) / 100).toFixed(2);
     
-   
-    var total_bill_pp = Math.round((temp_bill + tip) * 100 / temp_people);
+        bill_pp = (Math.ceil((temp_bill / temp_people) * 100) / 100).toFixed(2);
     
-    var grand_total = ((total_bill_pp * temp_people)/100).toFixed(2);
-
-    var total_bill_pp = (total_bill_pp / 100).toFixed(2);
-
-    console.log('tip_pp', tip_pp, tip, total_bill_pp);
-   
+        tip_pp = (+ind_bill_pp - +bill_pp).toFixed(2);
+        grand_total = (parseFloat(ind_bill_pp) * temp_people).toFixed(2);
+    }
+    
+        console.log('ind_bill_pp', ind_bill_pp);
+        console.log('bill_pp', bill_pp);
+        console.log('tip_pp', tip_pp);
+    
     
     if (temp_people == 1) {
         
         var output_tip = 'Tip is $'+tip_pp;
-        var output_bill = 'Total Bill is $'+total_bill_pp;
+        var output_bill = 'Total Bill is $'+ind_bill_pp;
     }
     else {
         var output_tip = 'Tip per person is $'+tip_pp;
-        var output_bill = 'Bill amount per person is $'+total_bill_pp;
+        var output_bill = 'Bill amount per person is $'+ind_bill_pp;
         var output_total = 'Total Bill is $'+grand_total;
     }    
    
