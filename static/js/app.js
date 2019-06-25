@@ -3,14 +3,15 @@ var msglist = ['Had a great time !',
                'The server deserves a good tip !',
                'Disappointed !',
                'Be generous !',
-               'Memorable!',
+               'Memorable !',
                'Great food, great service !!!',
                'The server works hard !',
                'Never coming back !',
                'Highly recommended !',
                'Five stars !',
                'It was only OK !',
-               'It was so-so'];
+               'It was so-so.',
+               'Slow service !'];
 
 msg_change('.sub-msg');
 console.log('msg-chg'); 
@@ -19,28 +20,34 @@ function msg_change(element) {
 
     var random = Math.floor(Math.random()*msglist.length);
 
-    d3.select(element).append("h6")
+    d3.select(element).append("p")
         .style('text-align', 'center')
+        .style('font-size', '14px')
+        .style('font-weight', '400') 
         .text(msglist[random]);
     
-    console.log(msglist[random]); 
     
     setInterval(() => {
         
         random = Math.floor(Math.random()*msglist.length);
 
-        var textMsg = d3.select(element).select("h6")
+        var textMsg = d3.select(element).select("p")
         if (!textMsg.empty()) {
           textMsg.remove();
         }
 
-        d3.selectAll(element).append("h6")
+        d3.selectAll(element).append("p")
         .style('text-align', "center")
+        .style('font-size', '14px')
+        .style('font-weight', '400') 
+
         .text(msglist[random]);},2000);
 
      }
 
     
+function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
+
 
 function clear_end_results() {
 
@@ -142,6 +149,16 @@ reset.on("click", function() {
 function validate_bill(bill_amt, tip_perc, nbr_people) {
     
     var err = 0;
+    
+    console.log('isNumber', isNumber(bill_amt))
+    
+    if (!isNumber(bill_amt)) {
+        err = 1;
+        var err_msg = d3
+         .select(".err-msg-1")
+         .classed("hidden", false);
+    }
+    
     var temp_bill = +bill_amt;
     console.log('validate', err, temp_bill);
 
@@ -179,7 +196,7 @@ function validate_bill(bill_amt, tip_perc, nbr_people) {
  
         
     var temp_people = +nbr_people;     
-    if (temp_people < 0) {
+    if (temp_people <= 0) {
         err = 1;
         var err_msg = d3
          .select(".err-msg-3")
@@ -221,10 +238,13 @@ function calc_total_bill(bill_amt, tip_perc, nbr_people) {
     var tip_pp = (tip / temp_people).toFixed(2);
     console.log('tip_pp', tip_pp, temp_bill, tip);
     
+   
     var total_bill_pp = Math.round((temp_bill + tip) * 100 / temp_people);
     
+    var grand_total = ((total_bill_pp * temp_people)/100).toFixed(2);
+
     var total_bill_pp = (total_bill_pp / 100).toFixed(2);
-    
+
     console.log('tip_pp', tip_pp, tip, total_bill_pp);
    
     
@@ -236,6 +256,7 @@ function calc_total_bill(bill_amt, tip_perc, nbr_people) {
     else {
         var output_tip = 'Tip per person is $'+tip_pp;
         var output_bill = 'Bill amount per person is $'+total_bill_pp;
+        var output_total = 'Total Bill is $'+grand_total;
     }    
    
         
@@ -254,8 +275,17 @@ function calc_total_bill(bill_amt, tip_perc, nbr_people) {
         .style("margin-left", "15px")
         .style("margin-right", "15px")
         .text(output_bill);
-     console.log('output', output_bill, end_results);
     
+    if (temp_people != 1) {
+        var end_results = d3
+            .select("#end_results")
+            .append("h5")
+            .style("margin-left", "15px")
+            .style("margin-right", "15px")
+            .text(output_total);
+    
+        
+    }
 }    
     
 

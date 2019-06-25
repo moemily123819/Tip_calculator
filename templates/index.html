@@ -8,11 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>*** Tip Calculator ***</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        p::before {
+          content: "How was today's service ?  ";
+        }
+        </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="jumbotron" style="text-align: center; background-color:#F2F5A9; color:#3B240B; padding-top:20px;">
+        <div class="jumbotron" style="text-align: center; background-color:#CED8F6; color:#3B240B; padding-top:20px;">
             <h1>
             <a><img src="{{ url_for('static', filename='images/waiter.png') }}" width="40" height="40"></a>
               Tip Calculator
@@ -21,6 +26,7 @@
             <hr>
         </div> 
         <div class="row sub-msg" style='height:25px;'>
+
         </div>
         <section>   
             <div class="row margin-top-50">
@@ -32,7 +38,7 @@
                     <br>     
                          <input type="number" class="form-control" id="billAmt" name="billAmt" min="0" step="0.01" style="margin-left:50px; width:215px; height:2.5rem; text-align:right;" />
                     <br>
-                         <label for="tipPerc" class="number-input">Tip (%)  : </label>
+                         <label for="tipPerc" class="number-input">Tip : </label>
                     <br>     
                          <input onclick="decrementTip()" type="button" id="arrow" style='margin-left:50px; font-size:15px;'  value="↓" />
                          <input id="tipPerc" type="text" value="15%"  style="width:58px; height:2.5rem; text-align:center; font-weight:500;" />
@@ -54,13 +60,13 @@
                       </form>
     
                       <div class="err-msg-1 hidden">
-                        <p style='margin-left: 10px;'><strong>Error - Bill Amount must be positive with at most 2 decimal places !</strong></p>
+                        <h4 style='margin-left: 10px;'><strong>Error - Bill Amount must be positive with at most 2 decimal places !</strong></h4>
                    </div>
                    <div class="err-msg-2 hidden">
-                        <p style='margin-left: 10px;'><strong>Error - Tip percentage must be positive !</strong></p>
+                        <h4 style='margin-left: 10px;'><strong>Error - Tip percentage must be positive !</strong></h4>
                    </div>
                    <div class="err-msg-3 hidden">
-                        <p style='margin-left: 10px;'><strong>Error - Tip percentage must be positive !</strong></p>
+                        <h4 style='margin-left: 10px;'><strong>Error - Number of Patrons must be positive !</strong></h4>
                     </div>  
     
                     </div>
