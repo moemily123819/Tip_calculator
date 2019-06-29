@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>*** Tip Calculator ***</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        p::before {
+          content: "How was today's service ?  ";
+        }
+        </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron" style="text-align: center; background-color:#FACC2E; color:#3B240B; padding-top:20px;">
+            <h1>
+            <a><img src="{{ url_for('static', filename='images/waiter.png') }}" width="40" height="40"></a>
+              Tip Calculator
+              <br>
+            </h1>
+            <hr>
+        </div> 
+        <div class="row sub-msg" style='height:25px;'>
+
+        </div>
+        <section>   
+            <div class="row margin-top-50">
+                <div class="col-md-6" style='display:inline-block;'>
+            
+                    <form method="POST" action="/send" role="form", name="tip_calc_form">                    
+                      <div class="form-group">
+                         <label for="billAmt">Bill amount : </label>
+                    <br>     
+                         <input type="number" class="form-control" id="billAmt" name="billAmt" min="0" step="0.01" style="margin-left:50px; width:215px; height:2.5rem; text-align:right;" />
+                    <br>
+                         <label for="tipPerc" class="number-input">Tip : </label>
+                    <br>     
+                         <input onclick="decrementTip()" type="button" id="arrow" style='margin-left:50px; font-size:15px;'  value="↓" />
+                         <input id="tipPerc" type="text" value="15%"  style="width:58px; height:2.5rem; text-align:center; font-weight:500;" />
+                         <input onclick="incrementTip()" type="button" id="arrow"  style="font-size:15px;" value="↑"  />
+                    <br>
+    
+                        <label for="nbrPeople">Number of Patrons : </label>
+                    <br>     
+                        <input onclick="decrementNbr()" type="button"  id="arrow" style='margin-left:50px; font-size:15px;' value="↓" />
+                        <input id="nbrPeople" class="number-input" type="number" value="1"  min="1" style="width:58px; height:2.5rem; text-align:center; font-weight:500;">
+                        <label for="nbrPeopleGap" style='width:30px;'></label>
+                        <input onclick="incrementNbr()" type="button"  id="arrow" style="font-size:15px;" value="↑" />
+                    
+                     <br>
+                     <br>
+                     <br>
+                      <input type="submit" id='submit' value="Submit" class="btn btn-default" style="margin-left:50px; font-size:15px;">
+                      <input type="reset" id='reset' style="margin-left:30px; font-size:15px;">
+                      </form>
+    
+                      <div class="err-msg-1 hidden">
+                        <h4 style='margin-left: 10px;'><strong>Error - Bill Amount must be positive with at most 2 decimal places !</strong></h4>
+                   </div>
+                   <div class="err-msg-2 hidden">
+                        <h4 style='margin-left: 10px;'><strong>Error - Tip percentage must be positive !</strong></h4>
+                   </div>
+                   <div class="err-msg-3 hidden">
+                        <h4 style='margin-left: 10px;'><strong>Error - Number of Patrons must be positive !</strong></h4>
+                    </div>  
+    
+                    </div>
+                </div>  
+    
+
+        </section>   
+        <section>   
+
+            <div class = 'col-md-6' id='end_results'>
+                  <h5></h5>  
+            </div>    
+
+        </section>   
+    </div>
+    <script>
+        function incrementTip()
+            {
+                var value = parseInt(document.getElementById('tipPerc').value, 10);
+                value = isNaN(value) ? 0 : value;
+                value++;
+                if (value <= 0) {
+                value = 0;
+                console.log('incrementTip', value+'%');
+            }
+                document.getElementById('tipPerc').value = value+'%';
+            }
+            
+
+        function decrementTip()
+            {
+            var value = parseInt(document.getElementById('tipPerc').value, 10);
+            value = isNaN(value) ? 0 : value;
+            console.log('isnan ', value);
+            value--;
+            if (value <= 0) {
+                value = 0;
+                console.log('decrementTip', value+"%");
+            }
+            document.getElementById('tipPerc').value = value+"%";
+            }
+
+            function incrementNbr()
+            {
+                var value = parseInt(document.getElementById('nbrPeople').value, 10);
+                value = isNaN(value) ? 0 : value;
+                value++;
+                if (value <= 0) {
+                value = 0;
+                console.log('inccrementNbr', value);
+            }
+                document.getElementById('nbrPeople').value = value;
+            }
+            
+
+        function decrementNbr()
+            {
+            var value = parseInt(document.getElementById('nbrPeople').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value--;
+            if (value <= 0) {
+                value = 0;
+                console.log('decrmentNbr', value);
+            }
+            document.getElementById('nbrPeople').value = value;
+            }
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>
