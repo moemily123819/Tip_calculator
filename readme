@@ -1,0 +1,8 @@
+Tip Calculator :
+ Allow user to enter the bill amount, tip percentage and number of patrons to split the bill. 
+ And it will calculate :
+ 
+ a. the tip amount to be paid by each patron
+ b. the bill amount to be paid by each patron
+ c. the total bill amount 
+ 
