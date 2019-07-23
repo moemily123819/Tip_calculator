@@ -24,6 +24,10 @@ Bill amount, tip percentage and number of patrons to split the bill are shown fo
 
   
 
+<img src="/static/images/tip_calc.PNG"     alt="Tip Calculator"     style="float: left; margin-right: 50px;" />
+
+
+
 ### **About this app :**
 
 Technical features used :
